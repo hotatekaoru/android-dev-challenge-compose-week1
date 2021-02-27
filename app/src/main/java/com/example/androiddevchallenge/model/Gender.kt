@@ -15,21 +15,9 @@
  */
 package com.example.androiddevchallenge.model
 
-import com.example.androiddevchallenge.R
+import android.graphics.Color
 
-data class Cat(
-    val id: Int,
-    val name: String,
-    val image: Int,
-    val genderType: Gender,
-    val old: String,
-    val hometown: String
-)
-
-val catsSeed = listOf(
-    Cat(1, "Mugi", R.drawable.cat_1, Gender.FEMALE, "8 months", "Tokyo"),
-    Cat(2, "Sora", R.drawable.cat_2, Gender.MALE, "2 years", "Osaka"),
-    Cat(3, "Reo", R.drawable.cat_3, Gender.MALE, "2 months", "London"),
-    Cat(4, "Coco", R.drawable.cat_4, Gender.FEMALE, "3 years", "Paris"),
-    Cat(5, "Maru", R.drawable.cat_5, Gender.FEMALE, "1 year", "New York"),
-)
+enum class Gender(val color: Int) {
+    MALE(Color.BLUE),
+    FEMALE(Color.RED),
+}
