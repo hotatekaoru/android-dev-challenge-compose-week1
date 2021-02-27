@@ -1,21 +1,15 @@
 # Put title of your app here
-
-<!--- Replace <OWNER> with your Github Username and <REPOSITORY> with the name of your repository. -->
-<!--- You can find both of these in the url bar when you open your repository in github. -->
 ![Workflow result](https://github.com/hotatekaoru/android-dev-challenge-compose-week1/workflows/Check/badge.svg)
 
 
 ## :scroll: Description
-<!--- Describe your app in one or two sentences -->
-
+- Cat list screen
+- Cat detail screen
 
 ## :bulb: Motivation and Context
-<!--- Optionally point readers to interesting parts of your submission. -->
-<!--- What are you especially proud of? -->
-
+Challenge Jetpack Compose 💪
 
 ## :camera_flash: Screenshots
-<!-- You can add more screenshots here if you like -->
 <img src="/results/screenshot_1.png" width="260">&emsp;<img src="/results/screenshot_2.png" width="260">
 
 ## License
@@ -34,3 +28,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 ```
+
+## Reference
+- Cat Images
+  - https://pixabay.com/ja/users/ben_kerckx-69781/
+  - https://pixabay.com/ja/users/guvo59-9285194/
+  - https://pixabay.com/ja/users/susannp4-1777190/
+  - https://pixabay.com/ja/users/uschi_du-6837866/
+  - https://pixabay.com/ja/users/quangpraha-7201644/
