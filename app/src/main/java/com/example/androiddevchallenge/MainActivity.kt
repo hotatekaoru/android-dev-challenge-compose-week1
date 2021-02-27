@@ -42,6 +42,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.NavType
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.navArgument
+import androidx.navigation.compose.navigate
+import androidx.navigation.compose.rememberNavController
 import com.example.androiddevchallenge.model.Cat
 import com.example.androiddevchallenge.model.catsSeed
 import com.example.androiddevchallenge.ui.theme.MyTheme
@@ -61,7 +68,7 @@ class MainActivity : AppCompatActivity() {
 @Composable
 fun MyApp() {
     Surface(color = MaterialTheme.colors.background) {
-        CatList(onSelected = { /*TODO*/ })
+        NavGraph()
     }
 }
 
@@ -82,13 +89,34 @@ fun DarkPreview() {
 }
 
 @Composable
+fun NavGraph(startDestination: String = "cats") {
+    val navController = rememberNavController()
+
+    NavHost(
+        navController = navController,
+        startDestination = startDestination
+    ) {
+        composable("cats") { CatList(navController) }
+        composable(
+            "cat/{catId}",
+            arguments = listOf(navArgument("catId") { type = NavType.IntType })
+        ) { backStackEntry ->
+            CatDetail(
+                navController,
+                requireNotNull(backStackEntry.arguments).getInt("catId")
+            )
+        }
+    }
+}
+
+@Composable
 fun CatList(
-    cats: List<Cat> = catsSeed,
-    onSelected: (Cat) -> Unit
+    navController: NavController,
+    cats: List<Cat> = catsSeed
 ) {
     LazyColumn(Modifier.fillMaxSize()) {
         items(cats) { cat ->
-            CatCard(cat) { onSelected(cat) }
+            CatCard(cat) { navController.navigate("cat/${cat.id}") }
         }
     }
 }
@@ -115,5 +143,17 @@ fun CatCard(
         }
         Spacer(Modifier.requiredWidth(24.dp))
         Text(cat.name, fontSize = 24.sp)
+    }
+}
+
+@Composable
+fun CatDetail(
+    navController: NavController,
+    catId: Int
+) {
+    catsSeed.find { it.id == catId }?.also { cat ->
+        Text(text = cat.name)
+    } ?: run {
+        navController.navigateUp()
     }
 }
