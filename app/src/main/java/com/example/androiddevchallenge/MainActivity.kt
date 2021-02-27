@@ -23,9 +23,13 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
@@ -37,6 +41,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.androiddevchallenge.model.Cat
 import com.example.androiddevchallenge.model.catsSeed
 import com.example.androiddevchallenge.ui.theme.MyTheme
 
@@ -55,7 +60,7 @@ class MainActivity : AppCompatActivity() {
 @Composable
 fun MyApp() {
     Surface(color = MaterialTheme.colors.background) {
-        Text(text = "Ready... Set... GO!")
+        CatList(onSelected = { /*TODO*/ })
     }
 }
 
@@ -67,7 +72,7 @@ fun LightPreview() {
     }
 }
 
-// @Preview("Dark Theme", widthDp = 360, heightDp = 640)
+@Preview("Dark Theme", widthDp = 360, heightDp = 640)
 @Composable
 fun DarkPreview() {
     MyTheme(darkTheme = true) {
@@ -75,16 +80,30 @@ fun DarkPreview() {
     }
 }
 
-@Preview("Cat Card", widthDp = 360)
 @Composable
-fun CatCard() {
-    val cat = catsSeed.first()
+fun CatList(
+    cats: List<Cat> = catsSeed,
+    onSelected: (Cat) -> Unit
+) {
+    LazyColumn(Modifier.fillMaxSize()) {
+        items(cats) { cat ->
+            CatCard(cat) { onSelected(cat) }
+        }
+    }
+}
+
+@Composable
+fun CatCard(
+    cat: Cat,
+    onClick: () -> Unit
+) {
     Row(
         Modifier
             .padding(8.dp)
             .clip(RoundedCornerShape(4.dp))
             .background(MaterialTheme.colors.surface)
-            .clickable(onClick = { /* Ignoring onClick */ })
+            .clickable(onClick = onClick)
+            .fillMaxWidth()
     ) {
         Surface(
             modifier = Modifier.size(50.dp),
