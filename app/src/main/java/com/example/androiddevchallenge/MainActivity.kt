@@ -41,6 +41,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.androiddevchallenge.model.Cat
 import com.example.androiddevchallenge.model.catsSeed
 import com.example.androiddevchallenge.ui.theme.MyTheme
@@ -64,7 +65,7 @@ fun MyApp() {
     }
 }
 
-// @Preview("Light Theme", widthDp = 360, heightDp = 640)
+@Preview("Light Theme", widthDp = 360, heightDp = 640)
 @Composable
 fun LightPreview() {
     MyTheme {
@@ -106,13 +107,13 @@ fun CatCard(
             .fillMaxWidth()
     ) {
         Surface(
-            modifier = Modifier.size(50.dp),
+            modifier = Modifier.size(80.dp),
             shape = CircleShape,
             color = MaterialTheme.colors.onSurface.copy(alpha = 0.2f)
         ) {
             Image(painter = painterResource(cat.image), contentDescription = cat.name)
         }
-        Spacer(Modifier.requiredWidth(10.dp))
-        Text(cat.name)
+        Spacer(Modifier.requiredWidth(24.dp))
+        Text(cat.name, fontSize = 24.sp)
     }
 }
