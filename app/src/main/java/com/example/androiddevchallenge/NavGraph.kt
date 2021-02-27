@@ -21,25 +21,34 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navArgument
 import androidx.navigation.compose.rememberNavController
+import com.example.androiddevchallenge.MainDestinations.CAT_DETAIL_ID_KEY
+import com.example.androiddevchallenge.MainDestinations.CAT_DETAIL_ROUTE
+import com.example.androiddevchallenge.MainDestinations.CAT_LIST_ROUTE
 import com.example.androiddevchallenge.ui.screens.CatDetailScreen
 import com.example.androiddevchallenge.ui.screens.CatListScreen
 
+object MainDestinations {
+    const val CAT_LIST_ROUTE = "cats"
+    const val CAT_DETAIL_ID_KEY = "catId"
+    const val CAT_DETAIL_ROUTE = "cat"
+}
+
 @Composable
-fun NavGraph(startDestination: String = "cats") {
+fun NavGraph(startDestination: String = CAT_LIST_ROUTE) {
     val navController = rememberNavController()
 
     NavHost(
         navController = navController,
         startDestination = startDestination
     ) {
-        composable("cats") { CatListScreen(navController) }
+        composable(CAT_LIST_ROUTE) { CatListScreen(navController) }
         composable(
-            "cat/{catId}",
-            arguments = listOf(navArgument("catId") { type = NavType.IntType })
+            "$CAT_DETAIL_ROUTE/{$CAT_DETAIL_ID_KEY}",
+            arguments = listOf(navArgument(CAT_DETAIL_ID_KEY) { type = NavType.IntType })
         ) { backStackEntry ->
             CatDetailScreen(
                 navController,
-                requireNotNull(backStackEntry.arguments).getInt("catId")
+                requireNotNull(backStackEntry.arguments).getInt(CAT_DETAIL_ID_KEY)
             )
         }
     }

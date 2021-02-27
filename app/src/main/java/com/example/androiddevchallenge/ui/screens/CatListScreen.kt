@@ -40,6 +40,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.navigate
+import com.example.androiddevchallenge.MainDestinations.CAT_DETAIL_ID_KEY
+import com.example.androiddevchallenge.MainDestinations.CAT_DETAIL_ROUTE
 import com.example.androiddevchallenge.model.Cat
 import com.example.androiddevchallenge.model.catsSeed
 
@@ -50,7 +52,7 @@ fun CatListScreen(
 ) {
     LazyColumn(Modifier.fillMaxSize()) {
         items(cats) { cat ->
-            CatCard(cat) { navController.navigate("cat/${cat.id}") }
+            CatCard(cat) { navController.navigate("$CAT_DETAIL_ROUTE/{$CAT_DETAIL_ID_KEY}") }
         }
     }
 }
