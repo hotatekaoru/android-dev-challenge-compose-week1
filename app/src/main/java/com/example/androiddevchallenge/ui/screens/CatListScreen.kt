@@ -72,25 +72,34 @@ private fun CatCard(
             .clickable(onClick = onClick)
             .fillMaxWidth()
     ) {
-        Surface(
-            modifier = Modifier.size(84.dp),
-            shape = CircleShape,
-            color = MaterialTheme.colors.onSurface.copy(alpha = 0.2f)
-        ) {
-            Image(painter = painterResource(cat.image), contentDescription = cat.name)
-        }
+        CatImage(cat)
         Spacer(Modifier.requiredWidth(24.dp))
+        CatExplain(cat)
+    }
+}
 
-        Column {
-            Text(cat.name, fontSize = 24.sp)
-            Spacer(Modifier.requiredHeight(8.dp))
-            Row {
-                Text(cat.genderType.name, color = Color(cat.genderType.color), fontSize = 16.sp)
-                Spacer(Modifier.requiredWidth(8.dp))
-                Text(cat.old, color = Color.Gray, fontSize = 16.sp)
-            }
-            Spacer(Modifier.requiredHeight(4.dp))
-            Text(cat.hometown, color = Color.Gray, fontSize = 16.sp)
+@Composable
+private fun CatImage(cat: Cat) {
+    Surface(
+        modifier = Modifier.size(84.dp),
+        shape = CircleShape,
+        color = MaterialTheme.colors.onSurface.copy(alpha = 0.2f)
+    ) {
+        Image(painter = painterResource(cat.image), contentDescription = cat.name)
+    }
+}
+
+@Composable
+private fun CatExplain(cat: Cat) {
+    Column {
+        Text(cat.name, fontSize = 24.sp)
+        Spacer(Modifier.requiredHeight(8.dp))
+        Row {
+            Text(cat.genderType.name, color = Color(cat.genderType.color), fontSize = 16.sp)
+            Spacer(Modifier.requiredWidth(8.dp))
+            Text(cat.old, color = Color.Gray, fontSize = 16.sp)
         }
+        Spacer(Modifier.requiredHeight(4.dp))
+        Text(cat.hometown, color = Color.Gray, fontSize = 16.sp)
     }
 }
