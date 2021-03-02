@@ -52,9 +52,19 @@ fun CatListScreen(
     navController: NavController,
     cats: List<Cat> = catsSeed
 ) {
+    CatList(cats) { cat ->
+        navController.navigate("$CAT_DETAIL_ROUTE/${cat.id}")
+    }
+}
+
+@Composable
+fun CatList(
+    cats: List<Cat>,
+    onClick: (cat: Cat) -> Unit
+) {
     LazyColumn(Modifier.fillMaxSize()) {
         items(cats) { cat ->
-            CatCard(cat) { navController.navigate("$CAT_DETAIL_ROUTE/${cat.id}") }
+            CatCard(cat) { onClick(cat) }
         }
     }
 }
