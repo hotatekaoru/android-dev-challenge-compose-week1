@@ -39,6 +39,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -52,9 +53,19 @@ fun CatListScreen(
     navController: NavController,
     cats: List<Cat> = catsSeed
 ) {
+    CatList(cats) { cat ->
+        navController.navigate("$CAT_DETAIL_ROUTE/${cat.id}")
+    }
+}
+
+@Composable
+fun CatList(
+    cats: List<Cat>,
+    onClick: (cat: Cat) -> Unit
+) {
     LazyColumn(Modifier.fillMaxSize()) {
         items(cats) { cat ->
-            CatCard(cat) { navController.navigate("$CAT_DETAIL_ROUTE/${cat.id}") }
+            CatCard(cat) { onClick(cat) }
         }
     }
 }
@@ -72,25 +83,43 @@ private fun CatCard(
             .clickable(onClick = onClick)
             .fillMaxWidth()
     ) {
-        Surface(
-            modifier = Modifier.size(84.dp),
-            shape = CircleShape,
-            color = MaterialTheme.colors.onSurface.copy(alpha = 0.2f)
-        ) {
-            Image(painter = painterResource(cat.image), contentDescription = cat.name)
-        }
+        CatImage(cat)
         Spacer(Modifier.requiredWidth(24.dp))
-
-        Column {
-            Text(cat.name, fontSize = 24.sp)
-            Spacer(Modifier.requiredHeight(8.dp))
-            Row {
-                Text(cat.genderType.name, color = Color(cat.genderType.color), fontSize = 16.sp)
-                Spacer(Modifier.requiredWidth(8.dp))
-                Text(cat.old, color = Color.Gray, fontSize = 16.sp)
-            }
-            Spacer(Modifier.requiredHeight(4.dp))
-            Text(cat.hometown, color = Color.Gray, fontSize = 16.sp)
-        }
+        CatExplain(cat)
     }
+}
+
+@Composable
+private fun CatImage(cat: Cat) {
+    Surface(
+        modifier = Modifier.size(84.dp),
+        shape = CircleShape,
+        color = MaterialTheme.colors.onSurface.copy(alpha = 0.2f)
+    ) {
+        Image(painter = painterResource(cat.image), contentDescription = cat.name)
+    }
+}
+
+@Composable
+private fun CatExplain(cat: Cat) {
+    Column {
+        Text(cat.name, fontSize = 24.sp)
+        Spacer(Modifier.requiredHeight(8.dp))
+        Row {
+            Text(cat.genderType.name, color = Color(cat.genderType.color), fontSize = 16.sp)
+            Spacer(Modifier.requiredWidth(8.dp))
+            Text(cat.old, color = Color.Gray, fontSize = 16.sp)
+        }
+        Spacer(Modifier.requiredHeight(4.dp))
+        Text(cat.hometown, color = Color.Gray, fontSize = 16.sp)
+    }
+}
+
+@Composable
+@Preview
+private fun CatListPreview() {
+    CatList(
+        cats = catsSeed,
+        onClick = {}
+    )
 }
